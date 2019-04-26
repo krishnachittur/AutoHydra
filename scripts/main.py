@@ -53,10 +53,6 @@ def main():
     # automatically scan the IP address range and log all open ports that we support attacking
     host_openings = autonmap.autonmap(args.host_ips)
 
-## Actual SSH key is stored in: /data/ssh/blah
-## Message stating "Sup bro, we got your ssh key stored in this location" is printed to file=self.output
-    # by default this is sys.stdout, but can also be a file as specified by user using --output flag
-
     for host in host_openings:
         # automate a Hydra-esque attack on this host
         for open_service in host_openings[host]:
