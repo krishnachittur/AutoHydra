@@ -1,4 +1,7 @@
-import pickle, gzip
+import pickle, gzip, csv
+from tabulate import tabulate
+
+loot_file = "data/loot.csv"
 
 def read_gz(filename):
     """Read pickle object from gzip file"""
@@ -12,6 +15,29 @@ def write_gz(filename, item):
     """Write pickle object to gzip file"""
     with gzip.open(filename, 'wb') as handle:
         pickle.dump(item, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+def log_loot(loot, output):
+    """Append list of (username, password) tuples to CSV file. Print message to output stream."""
+    print(f"{Color.GRN}Logging gathered loot.{Color.END}\n" +
+          "Note that sometimes only usernames are gathered, and sometimes only passwords.",
+          file=output)
+    print(tabulate(loot, headers=["Usernames", "Passwords"]), file=output)
+    with open(loot_file, "a") as log:
+        writer = csv.writer(log)
+        for item in loot:
+            writer.writerow(item)
+
+def get_logged_loot():
+    """Get list of (username, password) tuples from CSV file."""
+    logged_loot = []
+    try:
+        with open(loot_file, "r") as log:
+            reader = csv.reader(log)
+            for row in reader:
+                logged_loot.append(row)
+    except FileNotFoundError:
+            pass
+    return logged_loot
 
 class Color:
     """Useful ANSI escape sequences for different colors in terminal.
