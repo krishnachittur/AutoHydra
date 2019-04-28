@@ -47,7 +47,7 @@ def main():
                         help="Optional file to output results to", default=sys.stdout)
     parser.add_argument("-d", "--domain", metavar="<d>", type=str,
                         help="The domain of a potential LDAP server to attack",
-                        default="cn=serviceuser,ou=svcaccts,dc=glauth,dc=com")
+                        default="glauth.com")
     args = Arguments(parser.parse_args())
 
     # automatically scan the IP address range and log all open ports that we support attacking
