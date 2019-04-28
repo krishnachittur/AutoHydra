@@ -35,11 +35,11 @@ def main():
     parser = argparse.ArgumentParser(description="Automate Hydra attacks against a specified network range.")
     parser.add_argument("-i", "--host_ips", metavar="<i>", type=str,
                         help="IP address range to search", dest='host_ips')
-    parser.add_argument("-u" "--usernames", metavar="<u>", type=str,
+    parser.add_argument("-u", "--usernames", metavar="<u>", type=str,
                         help="File with list of usernames", default=None, dest='usernames')
-    parser.add_argument("-p" "--passwords", metavar="<p>", type=str,
+    parser.add_argument("-p", "--passwords", metavar="<p>", type=str,
                         help="File with list of passwords", default=None, dest='passwords')
-    parser.add_argument("-o" "--output", metavar="<o>", type=str,
+    parser.add_argument("-o", "--output", metavar="<o>", type=str,
                         help="Optional file to output results to", default=sys.stdout, dest='output')
     parser.add_argument("-d", "--domain", metavar="<d>", type=str,
                         help="The domain of a potential LDAP server to attack",
