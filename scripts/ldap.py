@@ -32,10 +32,12 @@ class LDAP(Exploit):
             successful_loot.append((username, password))
             captured_usernames.extend(new_usernames)
             captured_emailids.extend(new_emailids)
-        with open('/data/emailids.lst', 'a') as f:
-            f.write('\n'.join(captured_emailids) + '\n')
+        if captured_emailids:
+            with open('/data/emailids.lst', 'a') as f:
+                f.write('\n'.join(captured_emailids) + '\n')
         to_return = successful_loot + [(x, None) for x in captured_usernames]
         print(to_return)
+        return to_return
 
     def process_output(self, output):
         usernames, emailids = [], []
