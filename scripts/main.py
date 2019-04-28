@@ -19,10 +19,10 @@ Stuff that has to be defined on a per-exploit basis
 """
 
 exploits = {
-    'ssh': SSH,
-    'http': HTTP,
-    'postgresql': postgresql,
-    'ldap': LDAP
+    'ssh': SSH(),
+    'http': HTTP(),
+    'postgresql': postgresql(),
+    'ldap': LDAP()
 }
 
 def read_lines(filename):
