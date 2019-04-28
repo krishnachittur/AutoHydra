@@ -9,7 +9,7 @@ def autonmap(host_ips):
 
     services = {
         22:'ssh',
-#        80:'http',
+        80:'http',
         5432:'postgresql',
         389:'ldap',
     }
