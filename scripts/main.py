@@ -64,7 +64,7 @@ def main():
             if initial_loot:
                 log_loot(initial_loot, args.output)
                 # get more info from each service (finger, database dumps, ssh keys, etc.)
-                more_loot = exploit.get_loot(initial_loot)
+                more_loot = exploit.getloot(initial_loot)
                 if more_loot:
                     log_loot(more_loot, args.output)
 
