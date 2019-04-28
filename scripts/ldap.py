@@ -1,4 +1,4 @@
-from scripts.hydra import Exploit
+from hydra import Exploit
 class LDAP(Exploit):
     name = "ldap"
     port = 389

@@ -1,4 +1,4 @@
-from scripts.hydra import Exploit
+from hydra import Exploit
 class postgresql(Exploit):
     name = "postgresql"
     port = 5432

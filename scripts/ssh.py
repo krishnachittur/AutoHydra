@@ -1,4 +1,4 @@
-from scripts.hydra import Exploit
+from hydra import Exploit
 class SSH(Exploit):
     name = "ssh"
     port = 22

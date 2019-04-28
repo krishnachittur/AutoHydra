@@ -1,11 +1,11 @@
 #/usr/bin/env python3
 import os, sys
-import scripts.autonmap as autonmap
-from scripts.util import log_loot, get_logged_loot
-from scripts.http import HTTP
-from scripts.ldap import LDAP
-from scripts.ssh import SSH
-from scripts.postgresql import postgresql
+import autonmap
+from util import log_loot, get_logged_loot
+from http import HTTP
+from ldap import LDAP
+from ssh import SSH
+from postgresql import postgresql
 
 """
 Stuff that has to be defined on a per-exploit basis
