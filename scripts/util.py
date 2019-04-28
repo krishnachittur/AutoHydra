@@ -38,7 +38,7 @@ def get_logged_loot():
                 logged_loot.append(row)
     except FileNotFoundError:
             pass
-    return list(set(tuple(logged_loot)))
+    return list(set(tuple(tuple(l) for l in logged_loot)))
 
 class Color:
     """Useful ANSI escape sequences for different colors in terminal.
