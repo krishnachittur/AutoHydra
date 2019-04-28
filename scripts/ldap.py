@@ -33,7 +33,7 @@ class LDAP(Exploit):
             captured_usernames.extend(new_usernames)
             captured_emailids.extend(new_emailids)
         if captured_emailids:
-            with open('/data/emailids.lst', 'a') as f:
+            with open('/data/emailids.lst', 'a+') as f:
                 f.write('\n'.join(captured_emailids) + '\n')
         to_return = successful_loot + [(x, None) for x in captured_usernames]
         print(to_return)
