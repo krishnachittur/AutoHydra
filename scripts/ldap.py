@@ -28,7 +28,6 @@ class LDAP(Exploit):
             successful_loot.append((username, password))
             captured_usernames.extend(new_usernames)
         to_return = successful_loot + [(x, None) for x in captured_usernames]
-        print(to_return)
         return to_return
 
     def run_ldapsearch(self, ip_address, username, group, domainstring, password):
