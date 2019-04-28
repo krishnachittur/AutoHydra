@@ -18,10 +18,6 @@ Stuff that has to be defined on a per-exploit basis
 3) What Python function do we run to exploit the compromised system/service
 """
 
-class Arguments:
-    def __init__(self, parser):
-        """Set up parameters from command-line arguments."""
-
 exploits = {
     'ssh': SSH,
     'http': HTTP,
@@ -48,7 +44,7 @@ def main():
     parser.add_argument("-d", "--domain", metavar="<d>", type=str,
                         help="The domain of a potential LDAP server to attack",
                         default="glauth.com")
-    args = Arguments(parser.parse_args())
+    args = parser.parse_args()
 
     # automatically scan the IP address range and log all open ports that we support attacking
     host_openings = autonmap.autonmap(args.host_ips)
