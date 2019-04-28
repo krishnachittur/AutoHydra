@@ -51,4 +51,4 @@ class LDAP(Exploit):
         return usernames, emailids
 
     def getloot(self, ip_address, credentials):
-        pass
+        print('currently in getloot()')
