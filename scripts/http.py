@@ -1,4 +1,4 @@
-from scripts.hydra import Exploit
+from hydra import Exploit
 class HTTP(Exploit):
     name = "http-get"
     port = 80

