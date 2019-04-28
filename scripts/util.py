@@ -21,6 +21,7 @@ def log_loot(loot, output):
     print(f"{Color.GRN}Logging gathered loot.{Color.END}\n" +
           "Note that sometimes only usernames are gathered, and sometimes only passwords.",
           file=output)
+    loot = list(set(loot))
     print(tabulate(loot, headers=["Usernames", "Passwords"]), file=output)
     with open(loot_file, "a") as log:
         writer = csv.writer(log)
@@ -37,7 +38,7 @@ def get_logged_loot():
                 logged_loot.append(row)
     except FileNotFoundError:
             pass
-    return logged_loot
+    return list(set(logged_loot))
 
 class Color:
     """Useful ANSI escape sequences for different colors in terminal.

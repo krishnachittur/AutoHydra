@@ -1,7 +1,7 @@
 #/usr/bin/env python3
 import os, sys
 import autonmap
-from util import log_loot, get_logged_loot
+from util import log_loot, get_logged_loot, Color
 from http import HTTP
 from ldap import LDAP
 from ssh import SSH
@@ -72,7 +72,7 @@ def main():
     if not get_logged_loot():
         print("Attacks completed. No loot gained.", file=args.output)
         return
-    print("Attack completed. Re-attacking services using gathered loot.")
+    print(f"{Color.GRN}Attack completed. Re-attacking services using gathered loot.{Color.END}", file=args.output)
 
     for host in host_openings:
         found_usernames, found_passwords = zip(*get_logged_loot())
