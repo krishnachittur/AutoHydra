@@ -39,7 +39,7 @@ def main():
                         help="File with list of usernames", default=None)
     parser.add_argument("-p" "--passwords", metavar="<p>", type=str,
                         help="File with list of passwords", default=None)
-    parser.add_argument("-o" "--output", metavar="<o>", type=str,
+    parser.add_argument("-o" "--outputstream", metavar="<o>", type=str,
                         help="Optional file to output results to", default=sys.stdout)
     parser.add_argument("-d", "--domain", metavar="<d>", type=str,
                         help="The domain of a potential LDAP server to attack",
