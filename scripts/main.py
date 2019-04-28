@@ -46,6 +46,9 @@ def main():
                         default="glauth.com", dest='domain')
     args = parser.parse_args()
 
+    if isinstance(args.output, str):
+        args.output = open(args.output, 'w')
+
     # automatically scan the IP address range and log all open ports that we support attacking
     host_openings = autonmap.autonmap(args.host_ips)
 
