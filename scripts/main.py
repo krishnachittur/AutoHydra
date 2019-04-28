@@ -37,7 +37,7 @@ def read_lines(filename):
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Automate Hydra attacks against a specified network range.")
-    parser.add_argument("-h", "--host_ips", metavar="<h>", type=str,
+    parser.add_argument("-i", "--host_ips", metavar="<i>", type=str,
                         help="IP address range to search")
     parser.add_argument("-u" "--usernames", metavar="<u>", type=str,
                         help="File with list of usernames", default=None)
