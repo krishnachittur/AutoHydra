@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import psycopg2
-from scripts.hydra import Exploit
-=======
 from hydra import Exploit
->>>>>>> a27cd5a68c6f18a863644cd2b50b3381c422d316
 class postgresql(Exploit):
     name = "postgresql"
     port = 5432
