@@ -4,6 +4,7 @@ import os
 class Exploit:
     """A type of supported Hydra exploit. Don't instantiate this directly."""
     def __init__(self):
+        self.name = 'exploit'
         pass
     def attack(self, ip_address, usernames, passwords):
         """Run brute force attack against known IP address to find valid credentials"""
