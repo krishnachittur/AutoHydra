@@ -1,4 +1,4 @@
-import psycopg2
+# import psycopg2
 from hydra import Exploit
 class postgresql(Exploit):
     name = "postgresql"

