@@ -1,8 +1,10 @@
-# import psycopg2
+import psycopg2
 from hydra import Exploit
+
 class postgresql(Exploit):
-    name = "postgresql"
-    port = 5432
+    def __init__(self):
+        self.name = "postgresql"
+        self.port = 5432
     # def attack(self, ip_address):
     #     pass
 
@@ -53,6 +55,7 @@ class postgresql(Exploit):
                 print('Success. Gathering all md5 hashes.')
                         
             except psycopg2.ProgrammingError:
+                print('No MD5 hashes found.')
                 pass
 
         for k, v in loot_dict.items():
