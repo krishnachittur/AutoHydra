@@ -49,7 +49,7 @@ class LDAP(Exploit):
                 emailids.append(line[6:])
         # save email IDs, skipping duplicates
         if emailids:
-            with open('data/emailids.lst', 'r+') as f:
+            with open('data/emailids.lst', 'a+') as f:
                 old_emails = set(f.read().split())
             all_emails = old_emails.union(set(emailids))
             with open('data/emailids.lst', 'w+') as f:
