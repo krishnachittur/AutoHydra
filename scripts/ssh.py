@@ -40,7 +40,7 @@ class SSH(Exploit):
     def getloot(self, ip_address, credentials):
         # try to log into ssh using credentials
         for c in credentials:
-            print(f"Trying to SSH into IP address {ip_address} with:\n Username: {c[0]} and Password {c[1]}", file=self.output)
+            print(f"Trying to SSH into IP address {ip_address} with:\n Username: {c[0]} and Password: {c[1]}", file=self.output)
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             try:
