@@ -84,6 +84,9 @@ def main():
         with open('data/usernames_cache.txt', 'w') as f:
             for username in found_usernames:
                 f.write('%s\n' % username)
+            with open(args.usernames, 'r') as g:
+                for suggested_username in g.readlines():
+                    f.write(suggested_username)
         found_passwords = [x for x in found_passwords if x]
         with open('data/passwords_cache.txt', 'w') as f:
             for passwords in found_passwords:
