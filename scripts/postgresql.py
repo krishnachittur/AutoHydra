@@ -9,7 +9,7 @@ class postgresql(Exploit):
     # def attack(self, ip_address):
     #     pass
 
-    def getloot(ip_address, credentials):
+    def getloot(self, ip_address, credentials):
         print("going into getloot for postgres")
         more_loot = []
         loot_dict = {}
