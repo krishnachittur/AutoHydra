@@ -91,6 +91,9 @@ def main():
         with open('data/passwords_cache.txt', 'w') as f:
             for passwords in found_passwords:
                 f.write('%s\n' % passwords)
+            with open(args.passwords, 'r') as g:
+                for suggested_password in g.readlines():
+                    f.write(suggested_password)
         new_loot = exploit.attack(host, 'data/usernames_cache.txt', 'data/passwords_cache.txt')
         os.remove('data/usernames_cache.txt')
         os.remove('data/passwords_cache.txt')
