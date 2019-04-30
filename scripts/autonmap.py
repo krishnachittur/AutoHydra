@@ -22,8 +22,8 @@ def autonmap(host_ips):
             for proto in nm[host].all_protocols():
                 lport = nm[host][proto].keys()
                 for port in lport:
-                    #if port == 80 and not "Apache" in nm[host][host][version]:
-                    #    pass
+                    if port == 80 and not "Apache" in nm[host][proto][port]["version"]:
+                        pass
                     if port in services and not port == 80:
                         open_services.append(services[port])
         if open_services:
