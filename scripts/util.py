@@ -41,14 +41,11 @@ def get_logged_loot():
     return list(set(tuple(tuple(l) for l in logged_loot)))
 
 class Color:
-    """Useful ANSI escape sequences for different colors in terminal.
-    copied from https://stackoverflow.com/a/287944
-    and https://unix.stackexchange.com/a/93872"""
     # general codes
     END    = '\033[0m'
     BOLD   = '\033[1m'
     ULINE  = '\033[4m'
-    # ANSI foreground colors
+    # colors
     BLCK   = '\033[30m'
     RED    = '\033[31m'
     GRN    = '\033[32m'
@@ -57,7 +54,7 @@ class Color:
     MAGEN  = '\033[35m'
     CYAN   = '\033[36m'
     WHITE  = '\033[37m'
-    # bright aixterm colors
+    # bright colors
     BBLCK  = '\033[90m'
     BRED   = '\033[91m'
     BGRN   = '\033[92m'
