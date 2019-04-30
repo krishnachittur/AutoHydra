@@ -19,7 +19,7 @@ class SSH(Exploit):
             loot = (toks[0], None)
             if loot not in usernames:
                 usernames.append(loot)
-        print(f"{Color.BGRN}Success.{Color.END} Usernames found: ", file=self.output)
+        print(f"{Color.BGRN}Success.{Color.END}{Color.BMAGEN} Usernames found: {Color.END}", file=self.output)
         print(usernames, file=self.output)
         return usernames
     
