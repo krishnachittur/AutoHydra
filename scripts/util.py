@@ -38,7 +38,7 @@ def get_logged_loot():
             reader = csv.reader(log)
             for row in reader:
                 # change '' to None
-                for i in range(row):
+                for i in range(len(row)):
                     if not row[i]:
                         row[i] = None
                 logged_loot.append(row)
