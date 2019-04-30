@@ -21,7 +21,7 @@ Stuff that has to be defined on a per-exploit basis
 exploits = {
     'ssh': SSH(),
     'http': HTTP(),
-    'postgresql': postgresql(),
+    'postgres': postgresql(),
     'ldap': LDAP()
 }
 
