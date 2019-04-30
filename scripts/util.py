@@ -22,8 +22,7 @@ def log_loot(loot, output):
           "Note that sometimes only usernames are gathered, and sometimes only passwords.",
           file=output)
     old_loot = set(get_logged_loot())
-    loot = set(loot) - old_loot
-    loot = list(loot)
+    loot = list(set(loot) - old_loot)
 
     print(tabulate(loot, headers=["Usernames", "Passwords"]), file=output)
     with open(loot_file, "a") as log:
@@ -38,10 +37,14 @@ def get_logged_loot():
         with open(loot_file, "r") as log:
             reader = csv.reader(log)
             for row in reader:
+                # change '' to None
+                for i in range(len(row)):
+                    if not row[i]:
+                        row[i] = None
                 logged_loot.append(row)
     except FileNotFoundError:
             pass
-    return logged_loot
+    return tuple(tuple(l) for l in logged_loot)
 
 class Color:
     # general codes

