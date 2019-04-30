@@ -45,7 +45,7 @@ class SSH(Exploit):
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             try:
                 ssh.connect(ip_address, username=c[0], password=c[1])
-            except:
+            except paramiko.AuthenticationException:
                 print(f'{Color.BRED}Authentification failed.{Color.END}', file=self.output)
                 ssh.close()
             else:
