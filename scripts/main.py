@@ -92,6 +92,9 @@ def main():
         os.remove('data/passwords_cache.txt')
         if new_loot:
             log_loot(new_loot, args.output)
+            more_loot = exploit.getloot(host, new_loot)
+            if more_loot:
+                log_loot(more_loot, args.output)
 
 if __name__=='__main__':
     main()
