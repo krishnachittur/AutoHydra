@@ -20,7 +20,7 @@ class Exploit:
         loot_file.readline()
         for loot in loot_file.readlines():
             line = loot.split(" ")
-            return_list.append((line[4], line[6]))
+            return_list.append((line[6], line[8]))
         return return_list
 
     def getloot(self, ip_address, credentials):
