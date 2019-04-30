@@ -21,7 +21,9 @@ def log_loot(loot, output):
     print(f"{Color.GRN}Logging gathered loot.{Color.END}\n" +
           "Note that sometimes only usernames are gathered, and sometimes only passwords.",
           file=output)
-    loot = list(set(loot))
+    old_loot = set(get_logged_loot())
+    loot = list(set(loot) - old_loot)
+
     print(tabulate(loot, headers=["Usernames", "Passwords"]), file=output)
     with open(loot_file, "a") as log:
         writer = csv.writer(log)
