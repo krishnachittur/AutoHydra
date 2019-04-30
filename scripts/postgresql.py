@@ -10,6 +10,7 @@ class postgresql(Exploit):
     #     pass
 
     def getloot(ip_address, credentials):
+        print("going into getloot for postgres")
         more_loot = []
         loot_dict = {}
         ip_address = str(ip_address)
