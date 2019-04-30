@@ -18,7 +18,8 @@ class HTTP(Exploit):
                     if not line:
                         continue
                     if line.startswith('/'):
-                        files.append(line[0:])
+                        file = line.split()
+                        files.append(file[0])
                 if files:
                     with open(f'data/{ip_address}_files.lst', 'a+') as f:
                         old_files = set(f.read().split())
