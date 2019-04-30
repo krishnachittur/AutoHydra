@@ -1,14 +1,15 @@
 import subprocess
 import itertools as it
 from hydra import Exploit
+from util import Color
 class LDAP(Exploit):
     def __init__(self):
         self.name = 'ldap'
         self.port = 389
     
     def attack(self, ip_address, usernames, passwords):
-        print(f"Running LDAP attack against IP address {ip_address} with:\n",
-              f"\tusernames {usernames}\n\tpasswords {passwords}\n\tdomain {self.domain}", file=self.output)
+        print(f"{Color.CYAN}Running LDAP attack against IP address {ip_address} with:\n",
+              f"\tusernames {usernames}\n\tpasswords {passwords}\n\tdomain {self.domain}{Color.END}", file=self.output)
         common_usernames = ['root', 'admin', 'user']
         with open(usernames, 'r') as f:
             provided_usernames = f.read().split()
