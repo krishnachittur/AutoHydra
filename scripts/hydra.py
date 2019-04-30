@@ -21,7 +21,7 @@ class Exploit:
         for loot in loot_file.readlines():
             line = loot.split(" ")
             return_list.append((line[6], line[8]))
-        os.remove(filename)
+        os.remove(f'data/loot_{ip_address}_{self.name}.txt')
         return return_list
 
     def getloot(self, ip_address, credentials):
