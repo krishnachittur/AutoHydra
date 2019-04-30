@@ -61,6 +61,6 @@ class postgresql(Exploit):
 
         for k, v in loot_dict.items():
             if k not in {"serviceuser", "pg_signal_backend", "pg_monitor", "pg_read_all_settings", "pg_read_all_stats", "pg_stat_scan_tables"}:
-                more_loot.append((k,))
+                more_loot.append((k, None))
 
         return more_loot
