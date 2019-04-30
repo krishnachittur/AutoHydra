@@ -3,7 +3,7 @@ from hydra import Exploit
 
 class postgresql(Exploit):
     def __init__(self):
-        self.name = "postgresql"
+        self.name = "postgres"
         self.port = 5432
     # def attack(self, ip_address):
     #     pass
