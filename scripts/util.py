@@ -37,6 +37,10 @@ def get_logged_loot():
         with open(loot_file, "r") as log:
             reader = csv.reader(log)
             for row in reader:
+                # change '' to None
+                for i in range(row):
+                    if not row[i]:
+                        row[i] = None
                 logged_loot.append(row)
     except FileNotFoundError:
             pass
