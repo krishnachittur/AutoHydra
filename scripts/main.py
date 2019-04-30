@@ -50,6 +50,7 @@ def main():
         args.output = open(args.output, 'w')
 
     # automatically scan the IP address range and log all open ports that we support attacking
+    print(f"{Color.GRN}Scanning IP address range {args.host_ips}...{Color.END}", file=args.output)
     host_openings = autonmap.autonmap(args.host_ips)
 
     for host in host_openings:
@@ -75,7 +76,7 @@ def main():
     if not get_logged_loot():
         print("Attacks completed. No loot gained.", file=args.output)
         return
-    print(f"{Color.GRN}Attack completed. Re-attacking services using gathered loot.{Color.END}", file=args.output)
+    print(f"{Color.GRN}Attack completed. Re-attacking services using any stored loot.{Color.END}", file=args.output)
 
     for host in host_openings:
         found_usernames, found_passwords = zip(*get_logged_loot())
