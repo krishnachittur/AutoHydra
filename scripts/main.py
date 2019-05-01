@@ -97,8 +97,8 @@ def main():
             print(f"{Color.ULINE}Round 2 of attacking host {host} on port {exploit.port} using {exploit.name}.",
                   f"This may take a while.{Color.END}",
                     file=args.output)
-            found_usernames = found_usernames + suggested_usernames
-            found_passwords = found_passwords + suggested_passwords
+            found_usernames = list(found_usernames) + list(suggested_usernames)
+            found_passwords = list(found_passwords) + list(suggested_passwords)
             found_usernames = list(set(x for x in found_usernames if x))
             found_passwords = list(set(x for x in found_passwords if x))
             with open('data/usernames_cache.txt', 'w') as f:
