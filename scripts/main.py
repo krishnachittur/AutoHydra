@@ -7,7 +7,7 @@ from ldap import LDAP
 from ssh import SSH
 from postgresql import postgresql
 
-logo = """
+logo = r"""
                 _        _    _           _           
      /\        | |      | |  | |         | |          
     /  \  _   _| |_ ___ | |__| |_   _  __| |_ __ __ _ 
