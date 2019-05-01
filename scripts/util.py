@@ -53,7 +53,7 @@ def print_all_loot(output):
     if not loot:
         print(f"{Color.RED}No loot obtained.{Color.END}", file=output)
         return
-    print(f"{Color.BGREEN}Printing all gathered loot:{Color.BGREEN}")
+    print(f"{Color.BGRN}Printing all gathered loot:{Color.END}")
     print(Color.BBLUE + tabulate(loot, headers=["Usernames", "Passwords"]) + Color.END, file=output)
 
 class Color:
