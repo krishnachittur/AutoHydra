@@ -3,7 +3,7 @@ import nmap
 # function that creates endpoints of all host ip's scanned
 def autonmap(host_ips):
     nm = nmap.PortScanner()
-    nm.scan(hosts = host_ips, arguments= '-T4 --open -Pn -n -p --script "http-auth" 22,80,5432,389')
+    nm.scan(hosts = host_ips, arguments= '-T4 --open -Pn -n --script "http-auth" -p 22,80,5432,389')
 
     host_openings = {}
 
