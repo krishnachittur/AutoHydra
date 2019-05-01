@@ -7,15 +7,15 @@ from ldap import LDAP
 from ssh import SSH
 from postgresql import postgresql
 
-"""
-Stuff that has to be defined on a per-exploit basis
-1) What nmap command to run
-    - check if a given port is open and is running a certain service
-2) What command (python function) do we run to actually exploit the service?
-    - Most functions just call Hydra and then parse the output to get loot (usernames, passwords) but LDAP doesn't
-    - Need to store the loot somewhere
-    - Run this function asynchronously
-3) What Python function do we run to exploit the compromised system/service
+logo = """
+                _        _    _           _           
+     /\        | |      | |  | |         | |          
+    /  \  _   _| |_ ___ | |__| |_   _  __| |_ __ __ _ 
+   / /\ \| | | | __/ _ \|  __  | | | |/ _` | '__/ _` |
+  / ____ \ |_| | || (_) | |  | | |_| | (_| | | | (_| |
+ /_/    \_\__,_|\__\___/|_|  |_|\__, |\__,_|_|  \__,_|
+                                 __/ |                
+                                |___/                 
 """
 
 exploits = {
@@ -48,6 +48,8 @@ def main():
 
     if isinstance(args.output, str):
         args.output = open(args.output, 'w')
+    else:
+        print(logo)
 
     # automatically scan the IP address range and log all open ports that we support attacking
     print(f"{Color.GRN}Scanning IP address range {args.host_ips}...{Color.END}", file=args.output)
