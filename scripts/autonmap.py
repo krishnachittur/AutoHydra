@@ -22,7 +22,7 @@ def autonmap(host_ips):
             for proto in nm[host].all_protocols():
                 lport = nm[host][proto].keys()
                 for port in lport:
-                    if port == 80 and not "http-auth" in nm[host][proto][port]['script']:
+                    if (port == 80) and ('script' in nm[host][proto][port]) and (not "http-auth" in nm[host][proto][port]['script']):
                         continue
                     if port in services:
                         open_services.append(services[port])
