@@ -83,7 +83,7 @@ def main():
         for open_service in host_openings[host]:
             exploit = exploits[open_service]
             found_usernames, found_passwords = zip(*get_logged_loot())
-            found_usernames = [x for x in found_usernames if x]
+            found_usernames = list(set((x for x in found_usernames if x)))
             if not found_usernames:
                 return
             print(f"{Color.ULINE}Round 2 of attacking host {host} on port {exploit.port} using {exploit.name}.",
@@ -95,7 +95,7 @@ def main():
                 with open(args.usernames, 'r') as g:
                     for suggested_username in g.readlines():
                         f.write(suggested_username)
-            found_passwords = [x for x in found_passwords if x]
+            found_passwords = list(set(x for x in found_passwords if x))
             with open('data/passwords_cache.txt', 'w') as f:
                 for passwords in found_passwords:
                     f.write('%s\n' % passwords)
