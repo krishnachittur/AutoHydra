@@ -23,7 +23,8 @@ def log_loot(loot, output):
           file=output)
     old_loot = set(get_logged_loot())
     loot = list(set(loot) - old_loot)
-
+    if not loot:
+        return
     print(tabulate(loot, headers=["Usernames", "Passwords"]), file=output)
     with open(loot_file, "a") as log:
         writer = csv.writer(log)
@@ -45,6 +46,15 @@ def get_logged_loot():
     except FileNotFoundError:
             pass
     return tuple(tuple(l) for l in logged_loot)
+
+def print_all_loot(output):
+    """Print all of the loot logged by the program."""
+    loot = get_logged_loot()
+    if not loot:
+        print(f"{Color.RED}No loot obtained.{Color.END}", file=output)
+        return
+    print(f"{Color.BGREEN}Printing all gathered loot:{Color.BGREEN}")
+    print(Color.BBLUE + tabulate(loot, headers=["Usernames", "Passwords"]) + Color.END, file=output)
 
 class Color:
     # general codes

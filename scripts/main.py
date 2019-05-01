@@ -1,7 +1,7 @@
 #/usr/bin/env python3
 import os, sys
 import autonmap
-from util import log_loot, get_logged_loot, Color
+from util import log_loot, get_logged_loot, Color, print_all_loot
 from http import HTTP
 from ldap import LDAP
 from ssh import SSH
@@ -115,6 +115,7 @@ def main():
                 more_loot = exploit.getloot(host, new_loot)
                 if more_loot:
                     log_loot(more_loot, args.output)
+    print_all_loot(args.output)
 
 if __name__=='__main__':
     main()
