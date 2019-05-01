@@ -59,7 +59,7 @@ def main():
             exploit = exploits[open_service]
             exploit.output = args.output
             exploit.domain = args.domain # mainly important for LDAP
-            print(f"{Color.MAGEN}Round 1 of attacking host {host} on port {exploit.port} using {exploit.name}.",
+            print(f"{Color.ULINE}Round 1 of attacking host {host} on port {exploit.port} using {exploit.name}.",
                   f"This may take a while.{Color.END}",
                     file=args.output)
             # TODO use multiprocessing to do this asynchronously
@@ -86,7 +86,7 @@ def main():
             found_usernames = [x for x in found_usernames if x]
             if not found_usernames:
                 return
-            print(f"{Color.MAGEN}Round 2 of attacking host {host} on port {exploit.port} using {exploit.name}.",
+            print(f"{Color.ULINE}Round 2 of attacking host {host} on port {exploit.port} using {exploit.name}.",
                   f"This may take a while.{Color.END}",
                     file=args.output)
             with open('data/usernames_cache.txt', 'w') as f:
