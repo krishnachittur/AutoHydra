@@ -29,7 +29,7 @@ class SSH(Exploit):
         else:
             keys_bytes = stdout.read()
             keys = keys_bytes.decode(encoding='UTF-8')
-            if keys:
+            if keys is '':
                 with open(f"./data/{ip_address}_{username}_sshkey.txt", "w") as text_file:
                     text_file.write(keys)
                 print(f"{Color.BGRN}Success.{Color.END}{Color.BMAGEN} SSH keys saved in Data folder.{Color.END}", file=self.output)
