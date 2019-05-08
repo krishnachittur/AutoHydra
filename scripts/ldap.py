@@ -16,7 +16,9 @@ class LDAP(Exploit):
         usernames = common_usernames + provided_usernames
         with open(passwords, 'r') as f:
             passwords = f.read().split()
+        # LDAP has a group system which isn't used by other systems
         common_groups = ['admins', 'users']
+        # e.g. glauth.com => dc=glauth,dc=com
         domainstring = ','.join(['dc='+x for x in self.domain.split('.')])
 
         captured_usernames = []
@@ -58,6 +60,7 @@ class LDAP(Exploit):
         return usernames
 
     def getloot(self, ip_address, credentials):
+        # steal new information given credentials from elsewhere
         common_groups = ['admins', 'users']
         domainstring = ','.join(['dc='+x for x in self.domain.split('.')])
         captured_usernames = []
