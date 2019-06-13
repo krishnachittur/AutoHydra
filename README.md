@@ -1,5 +1,5 @@
 # AutoHydra
-AutoHydra automates nmap scans and hydra attacks against exposed ports requiring authentication on a specified IP range. Any cracked usernames and passwords are cached and reused against other endpoints automatically. Usage of wordlists such as `rockyou.txt` are encouraged.
+AutoHydra automates nmap scans and hydra attacks against exposed ports requiring authentication on a specified IP range. Any cracked usernames and passwords are cached and reused against other endpoints automatically. Usage of wordlists such as `rockyou.txt` is encouraged.
 
 ## Dependencies
 
